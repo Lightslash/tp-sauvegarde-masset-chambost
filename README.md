@@ -37,5 +37,7 @@ Utilisation de restore_from_backup.sh:
 ``` 
 
 user@hostname -> Adresse machine NextCloud
+
 port -> Port SSH de la machine NextCloud
+
 snapshot -> Nom d'un des snapshots, optionnel
