@@ -1,0 +1,21 @@
+Tous les scripts sont à lancer depuis la machine de backup
+
+1 - Se connecter via SSH vers Nextcloud (Générer clé rsa (?))
+2 (connecté a nextcloud) - Modifier sshd config et PermitRootLogin -> Utilise init.sh de Thibaut
+3 - Créer un premier script de sauvegarde. 
+	-> Mettre NextCloud en maintenance
+	-> Ssh: créer un MySQL dump de la BDD (de Nextcloud) dans un .bak
+	-> rsync: Copier le .bak dans le serveur backup + créer une copie de /var/www/html/nextcloud
+	-> Zfs: Faire un snapshot de toutes ces datas
+	-> Rétention de 30 jours: Voir sur le fichier de Max
+	-> Sortir du mode maintenance
+4 - Restaurer les données
+	-> Mettre NextCloud en maintenance
+	-> Zfs: Verrouillage du snapshot
+	-> rsync: Restauration des datas
+	-> Nettoyage BDD (drop->create database) 
+	-> Restauration de la BDD sur Nextcloud
+	-> rsync: Restauration du .bak
+	-> zfs: Suppression du snapshot sur la backup
+	-> Déverrouillage du snapshot sur NextCloud
+	-> Redémarrage NextCloud (quitte la maintenance.)
